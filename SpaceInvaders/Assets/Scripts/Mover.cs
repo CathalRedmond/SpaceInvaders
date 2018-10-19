@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
-
     private Rigidbody m_rigidbody;
     public float speed;
 
@@ -12,7 +11,5 @@ public class Mover : MonoBehaviour
     {
         m_rigidbody = GetComponent<Rigidbody>();
         m_rigidbody.velocity = transform.forward * speed;
-    }
-
-   
+    } 
 }
