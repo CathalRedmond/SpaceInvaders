@@ -10,6 +10,7 @@ public class ShipMover : MonoBehaviour {
     private int moveDirection;
     bool moving = false;
     bool firstSpawn = true;
+    public bool collided = false;
 
     // Use this for initialization
     void Start () {
@@ -17,12 +18,12 @@ public class ShipMover : MonoBehaviour {
         spawnSide %= 2;
         if (spawnSide == 0.0f)
         {
-            spawnLocation = new Vector3(-7.5f, 0.0f, 14.25f);
+            spawnLocation = new Vector3(-8.5f, 0.0f, 18.5f);
             moveDirection = 1;
         }
         else
         {
-            spawnLocation = new Vector3(7.5f, 0.0f, 14.25f);
+            spawnLocation = new Vector3(8.5f, 0.0f, 18.5f);
             moveDirection = -1;
         }
 
@@ -33,7 +34,11 @@ public class ShipMover : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        //StopCoroutine(moveShip());
+        if (collided)
+        {
+            GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<Collider>().enabled = false;
+        }
     }
 
     IEnumerator moveShip()
@@ -62,8 +67,8 @@ public class ShipMover : MonoBehaviour {
                         transform.position -= movement;
                     }
 
-                    if (transform.position.x > 8.0f ||
-                        transform.position.x < -8.0f)
+                    if (transform.position.x > 8.5f ||
+                        transform.position.x < -8.5f)
                     {
                         moving = false;
                     }
@@ -74,6 +79,9 @@ public class ShipMover : MonoBehaviour {
                 {
                     moveDirection *= -1;
                     moving = true;
+                    GetComponent<MeshRenderer>().enabled = true;
+                    GetComponent<Collider>().enabled = true;
+                    collided = false;
                     float SpawnTime = Random.Range(2.0f, 5.0f);
                     yield return new WaitForSeconds(SpawnTime);
                 }

@@ -8,10 +8,6 @@ public class BoundaryScript : MonoBehaviour {
     {
         ContainerMover containerScript = GameObject.Find("Invaders").GetComponent<ContainerMover>();
 
-        if (containerScript == null)
-        {
-            print("Reeeeeeeeeeeeeee");
-        }
         if (!containerScript.collided)
         {
             containerScript.horizontalMove = -containerScript.horizontalMove;

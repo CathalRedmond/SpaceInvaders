@@ -11,5 +11,21 @@ public class Mover : MonoBehaviour
     {
         m_rigidbody = GetComponent<Rigidbody>();
         m_rigidbody.velocity = transform.forward * speed;
-    } 
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Invader")
+        {
+            Destroy(col.gameObject);
+            Destroy(gameObject);
+        }
+        if (col.gameObject.tag == "Ship")
+        {
+            Destroy(gameObject);
+            ShipMover shipScript = GameObject.Find("Ship").GetComponent<ShipMover>();
+
+            shipScript.collided = true;
+        }
+    }
 }
