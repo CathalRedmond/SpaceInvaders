@@ -16,9 +16,12 @@ public class bunkerController : MonoBehaviour {
     }
     void OnTriggerEnter(Collider other)
     {
-        Destroy(other.gameObject);
-        m_transform.localScale -= shrink;
-        m_bunkerHitCounter += 1;
+        if (other.gameObject.CompareTag("Shot"))
+        {
+            Destroy(other.gameObject);
+            m_transform.localScale -= shrink;
+            m_bunkerHitCounter += 1;
+        }
         if(m_bunkerHitCounter >= 10)
         {
             Destroy(this.gameObject);

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Boundary
@@ -12,6 +13,13 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour
 {
+
+    public Text scoreText;
+    public Text livesText;
+    public Text gameOverText;
+
+    private int score;
+    private int lives;
 
     public float speed;
 
@@ -28,17 +36,25 @@ public class PlayerController : MonoBehaviour
     {
         m_rigidbody = GetComponent<Rigidbody>();
         m_nextFire = 0;
+        updateText();
+        score = 0;
+        lives = 0;
+
     }
 
     void Update()
     {
-        if(Input.GetButton("Fire1") && Time.time > m_nextFire)
+        if (Input.GetButton("Fire1") && Time.time > m_nextFire)
         {
             m_nextFire = Time.time + m_fireRate;
             Instantiate(m_shot, m_shotSpawn.position, m_shotSpawn.rotation);
         }
 
+        updateText();
+
     }
+
+
 
 
     void FixedUpdate()
@@ -56,5 +72,22 @@ public class PlayerController : MonoBehaviour
         );
     }
 
-  
+
+    void updateText()
+    {
+
+        scoreText.text = "Score: " + score * 100;
+        livesText.text = "Lives: " + lives;
+
+        if (lives <= 0)
+        {
+            gameOverText.text = "Game Over Scrub";
+        }
+        else if (lives > 0)
+        {
+            gameOverText.text = "";
+        }
+    }
+
+
 }
