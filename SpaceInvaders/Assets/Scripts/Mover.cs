@@ -7,6 +7,7 @@ public class Mover : MonoBehaviour
     private Rigidbody m_rigidbody;
     public float speed;
 
+
     void Start()
     {
         m_rigidbody = GetComponent<Rigidbody>();
@@ -21,6 +22,8 @@ public class Mover : MonoBehaviour
             Destroy(gameObject);
             PlayerController playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
             playerScript.score += 100;
+
+            playerScript.invaderKilledSound.Play();
         }
         if (col.gameObject.tag == "Ship")
         {
@@ -31,6 +34,9 @@ public class Mover : MonoBehaviour
 
             PlayerController playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
             playerScript.score += 500;
+
+
+            playerScript.invaderKilledSound.Play();
         }
     }
 }

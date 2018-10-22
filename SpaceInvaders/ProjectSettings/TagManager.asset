@@ -8,6 +8,7 @@ TagManager:
   - Shot
   - Invader
   - Ship
+  - ShotSound
   layers:
   - Default
   - TransparentFX

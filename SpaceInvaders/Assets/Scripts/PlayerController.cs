@@ -13,10 +13,17 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour
 {
-
+ 
     public Text scoreText;
     public Text livesText;
     public Text gameOverText;
+
+    public AudioSource shotSound;
+    public AudioSource playerKilledSound;
+    public AudioSource invaderKilledSound;
+    public AudioSource bunkerHitSound;
+
+    private bool playPlayerKilledSound;
 
     public int score;
     public int lives;
@@ -39,15 +46,17 @@ public class PlayerController : MonoBehaviour
         updateText();
         score = 0;
         lives = 3;
-
+        playPlayerKilledSound = true;
+        //shotSound = GetComponent<AudioClip>();
     }
 
     void Update()
     {
-        if (Input.GetButton("Fire1") && Time.time > m_nextFire)
+        if (Input.GetKeyDown("space") && Time.time > m_nextFire)
         {
             m_nextFire = Time.time + m_fireRate;
             Instantiate(m_shot, m_shotSpawn.position, m_shotSpawn.rotation);
+            shotSound.Play();
         }
 
         updateText();
@@ -87,10 +96,17 @@ public class PlayerController : MonoBehaviour
         else if (lives <= 0)
         {
             gameOverText.text = "Game Over";
+
+            if(playPlayerKilledSound)
+            {
+                playPlayerKilledSound = false;
+                playerKilledSound.Play();
+            }
         }
         else if (lives > 0)
         {
             gameOverText.text = "";
+            playPlayerKilledSound = true;
         }
     }
 
