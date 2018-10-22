@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Boundary
@@ -10,6 +11,20 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour
 {
+ 
+    public Text scoreText;
+    public Text livesText;
+    public Text gameOverText;
+
+    public AudioSource shotSound;
+    public AudioSource playerKilledSound;
+    public AudioSource invaderKilledSound;
+    public AudioSource bunkerHitSound;
+
+    private bool playPlayerKilledSound;
+
+    public int score;
+    public int lives;
 
     public float speed;
 
@@ -26,17 +41,27 @@ public class PlayerController : MonoBehaviour
     {
         m_rigidbody = GetComponent<Rigidbody>();
         m_nextFire = 0;
+        updateText();
+        score = 0;
+        lives = 3;
+        playPlayerKilledSound = true;
+        //shotSound = GetComponent<AudioClip>();
     }
 
     void Update()
     {
-        if(Input.GetButton("Fire1") && Time.time > m_nextFire)
+        if (Input.GetKeyDown("space") && Time.time > m_nextFire)
         {
             m_nextFire = Time.time + m_fireRate;
             Instantiate(m_shot, m_shotSpawn.position, m_shotSpawn.rotation);
+            shotSound.Play();
         }
 
+        updateText();
+
     }
+
+
 
 
     void FixedUpdate()
@@ -54,5 +79,34 @@ public class PlayerController : MonoBehaviour
         );
     }
 
-  
+
+    void updateText()
+    {
+
+        scoreText.text = "Score: " + score ;
+        livesText.text = "Lives: " + lives;
+
+
+        if(GameObject.FindGameObjectsWithTag("Invader").Length <= 0)
+        {
+            gameOverText.text = "You Win";
+        }
+        else if (lives <= 0)
+        {
+            gameOverText.text = "Game Over";
+
+            if(playPlayerKilledSound)
+            {
+                playPlayerKilledSound = false;
+                playerKilledSound.Play();
+            }
+        }
+        else if (lives > 0)
+        {
+            gameOverText.text = "";
+            playPlayerKilledSound = true;
+        }
+    }
+
+
 }

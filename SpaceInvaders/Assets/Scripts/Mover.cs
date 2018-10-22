@@ -9,6 +9,7 @@ public class Mover : MonoBehaviour
     private PlayerController playerScript;
 
 
+
     void Start()
     {
         m_rigidbody = GetComponent<Rigidbody>();
@@ -27,6 +28,10 @@ public class Mover : MonoBehaviour
             ContainerMover containerScript = GameObject.Find("Invaders").GetComponent<ContainerMover>();
 
             containerScript.m_invaderCount--;
+            PlayerController playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+            playerScript.score += 100;
+
+            playerScript.invaderKilledSound.Play();
         }
         if (col.gameObject.tag == "Ship")
         {
@@ -34,6 +39,12 @@ public class Mover : MonoBehaviour
             ShipMover shipScript = GameObject.Find("Ship").GetComponent<ShipMover>();
 
             shipScript.collided = true;
+
+            PlayerController playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+            playerScript.score += 500;
+
+
+            playerScript.invaderKilledSound.Play();
         }
     }
 }
