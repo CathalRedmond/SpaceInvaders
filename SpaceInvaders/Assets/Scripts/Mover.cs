@@ -19,6 +19,8 @@ public class Mover : MonoBehaviour
         {
             Destroy(col.gameObject);
             Destroy(gameObject);
+            PlayerController playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+            playerScript.score += 100;
         }
         if (col.gameObject.tag == "Ship")
         {
@@ -26,6 +28,9 @@ public class Mover : MonoBehaviour
             ShipMover shipScript = GameObject.Find("Ship").GetComponent<ShipMover>();
 
             shipScript.collided = true;
+
+            PlayerController playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+            playerScript.score += 500;
         }
     }
 }

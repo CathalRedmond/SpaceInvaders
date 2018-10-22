@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
     public Text livesText;
     public Text gameOverText;
 
-    private int score;
-    private int lives;
+    public int score;
+    public int lives;
 
     public float speed;
 
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
         m_nextFire = 0;
         updateText();
         score = 0;
-        lives = 0;
+        lives = 3;
 
     }
 
@@ -76,12 +76,17 @@ public class PlayerController : MonoBehaviour
     void updateText()
     {
 
-        scoreText.text = "Score: " + score * 100;
+        scoreText.text = "Score: " + score ;
         livesText.text = "Lives: " + lives;
 
-        if (lives <= 0)
+
+        if(GameObject.FindGameObjectsWithTag("Invader").Length <= 0)
         {
-            gameOverText.text = "Game Over Scrub";
+            gameOverText.text = "You Win";
+        }
+        else if (lives <= 0)
+        {
+            gameOverText.text = "Game Over";
         }
         else if (lives > 0)
         {
