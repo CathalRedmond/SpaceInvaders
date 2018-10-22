@@ -4,10 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Undefined
   - Shot
   - Invader
   - Ship
+  - Bottom_Boundary
+  - Side_Boundary
+  - Invaders
   layers:
   - Default
   - TransparentFX

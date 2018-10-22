@@ -8,8 +8,6 @@ public class Boundary
     public float xMin, xMax;
 }
 
-
-
 public class PlayerController : MonoBehaviour
 {
 

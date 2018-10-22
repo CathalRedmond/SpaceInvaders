@@ -8,11 +8,20 @@ public class BoundaryScript : MonoBehaviour {
     {
         ContainerMover containerScript = GameObject.Find("Invaders").GetComponent<ContainerMover>();
 
-        if (!containerScript.collided)
+        if (other.tag != "Player" && other.tag != "Shot")
         {
-            containerScript.horizontalMove = -containerScript.horizontalMove;
-            containerScript.verticalMove = -0.5f;
-            containerScript.collided = true;
+            if (!containerScript.collided)
+            {
+                containerScript.horizontalMove = -containerScript.horizontalMove;
+                containerScript.verticalMove = -0.5f;
+                containerScript.collided = true;
+
+            }
+            else if (gameObject.tag == "Bottom_Boundary")
+            {
+                // do game over here
+            }
+
         }
     }
 }

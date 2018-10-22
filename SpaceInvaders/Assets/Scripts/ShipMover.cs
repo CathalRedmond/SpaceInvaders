@@ -47,7 +47,7 @@ public class ShipMover : MonoBehaviour {
         {
             if (firstSpawn)
             {
-                float firstSpawnTime = Random.Range(2.0f, 5.0f);
+                float firstSpawnTime = 5.0f;
                 firstSpawn = false;
                 moving = true;
                 yield return new WaitForSeconds(firstSpawnTime);
@@ -82,7 +82,7 @@ public class ShipMover : MonoBehaviour {
                     GetComponent<MeshRenderer>().enabled = true;
                     GetComponent<Collider>().enabled = true;
                     collided = false;
-                    float SpawnTime = Random.Range(2.0f, 5.0f);
+                    float SpawnTime = Random.Range(3.0f, 6.0f);
                     yield return new WaitForSeconds(SpawnTime);
                 }
             }
