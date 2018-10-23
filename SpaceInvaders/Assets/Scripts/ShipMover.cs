@@ -11,9 +11,14 @@ public class ShipMover : MonoBehaviour {
     bool moving = false;
     bool firstSpawn = true;
     public bool collided = false;
+    PlayerController playerScript;
+    Coroutine moveRoutine;
+    bool stop;
 
     // Use this for initialization
     void Start () {
+        stop = false;
+        playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         horizontalMove = 1;
         spawnSide %= 2;
         if (spawnSide == 0.0f)
@@ -29,7 +34,7 @@ public class ShipMover : MonoBehaviour {
 
         transform.position = spawnLocation;
 
-        StartCoroutine(moveShip());
+        moveRoutine = StartCoroutine(moveShip());
     }
 
     // Update is called once per frame
@@ -39,11 +44,19 @@ public class ShipMover : MonoBehaviour {
             GetComponent<MeshRenderer>().enabled = false;
             GetComponent<Collider>().enabled = false;
         }
+
+        playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        if (playerScript.lives <= 0)
+        {
+            stop = true;
+            StopCoroutine(moveRoutine);
+        }
     }
 
     IEnumerator moveShip()
     {
-        while (true)
+        while (!stop)
         {
             if (firstSpawn)
             {

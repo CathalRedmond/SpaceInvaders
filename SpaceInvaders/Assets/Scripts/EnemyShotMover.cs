@@ -6,12 +6,10 @@ public class EnemyShotMover : MonoBehaviour
 {
     private Rigidbody m_rigidbody;
     public float speed;
-    ContainerMover containerScript;
     PlayerController playerScript;
 
     void Start()
     {
-        containerScript = GameObject.Find("Invaders").GetComponent<ContainerMover>();
         playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         m_rigidbody = GetComponent<Rigidbody>();
         m_rigidbody.velocity = transform.forward * -speed;
@@ -21,8 +19,11 @@ public class EnemyShotMover : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            // player loses life
+            playerScript.lives--;
+            Destroy(gameObject);
+            playerScript.restart();
         }
+
         if (col.gameObject.tag == "Ship")
         {
             Destroy(gameObject);

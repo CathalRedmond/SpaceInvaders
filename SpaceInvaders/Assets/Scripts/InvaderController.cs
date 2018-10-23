@@ -4,18 +4,33 @@ using UnityEngine;
 
 public class InvaderController : MonoBehaviour {
     ContainerMover containerScript;
+    PlayerController playerScript;
     public GameObject m_shot;
+    Coroutine shootingRoutine;
+    bool stop = false;
 
     // Use this for initialization
     void Start () {
         containerScript = GameObject.Find("Invaders").GetComponent<ContainerMover>();
+        playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
 
-        StartCoroutine(fireBolt());
+        shootingRoutine = StartCoroutine(fireBolt());
+    }
+
+    void Update()
+    {
+        playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        if (playerScript.lives <= 0)
+        {
+            stop = true;
+            StopCoroutine(shootingRoutine);
+        }
     }
 
     IEnumerator fireBolt()
     {
-        while (true)
+        while (!stop)
         {
             if (containerScript.startShooting)
             {
@@ -26,5 +41,4 @@ public class InvaderController : MonoBehaviour {
             yield return new WaitForSeconds(shootDelay);
         }
     }
-
 }

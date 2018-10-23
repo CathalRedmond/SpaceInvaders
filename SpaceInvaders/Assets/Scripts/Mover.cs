@@ -8,8 +8,6 @@ public class Mover : MonoBehaviour
     public float speed;
     private PlayerController playerScript;
 
-
-
     void Start()
     {
         m_rigidbody = GetComponent<Rigidbody>();
@@ -22,13 +20,13 @@ public class Mover : MonoBehaviour
     {
         if (col.gameObject.tag == "Invader")
         {
-            Destroy(col.gameObject);
+            col.gameObject.SetActive(false);
             Destroy(gameObject);
 
             ContainerMover containerScript = GameObject.Find("Invaders").GetComponent<ContainerMover>();
 
             containerScript.m_invaderCount--;
-            PlayerController playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+            playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
             playerScript.score += 100;
 
             playerScript.invaderKilledSound.Play();
@@ -40,9 +38,8 @@ public class Mover : MonoBehaviour
 
             shipScript.collided = true;
 
-            PlayerController playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+            playerScript = GameObject.Find("Player").GetComponent<PlayerController>();
             playerScript.score += 500;
-
 
             playerScript.invaderKilledSound.Play();
         }

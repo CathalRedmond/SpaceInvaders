@@ -15,13 +15,7 @@ public class BoundaryScript : MonoBehaviour {
                 containerScript.horizontalMove = -containerScript.horizontalMove;
                 containerScript.verticalMove = -0.5f;
                 containerScript.collided = true;
-
             }
-            else if (gameObject.tag == "Bottom_Boundary")
-            {
-                // do game over here
-            }
-
         }
     }
 }

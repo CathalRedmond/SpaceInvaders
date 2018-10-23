@@ -50,35 +50,36 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown("space") && Time.time > m_nextFire)
+        if (lives > 0)
         {
-            m_nextFire = Time.time + m_fireRate;
-            Instantiate(m_shot, m_shotSpawn.position, m_shotSpawn.rotation);
-            shotSound.Play();
+            if (Input.GetKeyDown("space") && Time.time > m_nextFire)
+            {
+                m_nextFire = Time.time + m_fireRate;
+                Instantiate(m_shot, m_shotSpawn.position, m_shotSpawn.rotation);
+                shotSound.Play();
+            }
         }
 
         updateText();
-
     }
-
-
-
-
+    
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
+        if (lives > 0)
+        {
+            float moveHorizontal = Input.GetAxis("Horizontal");
 
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, 0.0f);
-        m_rigidbody.AddForce(movement * speed);
+            Vector3 movement = new Vector3(moveHorizontal, 0.0f, 0.0f);
+            m_rigidbody.AddForce(movement * speed);
 
-        m_rigidbody.position = new Vector3
-        (
-            Mathf.Clamp(m_rigidbody.position.x, m_boundary.xMin, m_boundary.xMax),
-            0.0f,
-            0.0f
-        );
+            m_rigidbody.position = new Vector3
+            (
+                Mathf.Clamp(m_rigidbody.position.x, m_boundary.xMin, m_boundary.xMax),
+                0.0f,
+                0.0f
+            );
+        }
     }
-
 
     void updateText()
     {
@@ -108,5 +109,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void restart()
+    {
+        transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        m_rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
 
+
+        // become invulnerable here
+    }
 }
