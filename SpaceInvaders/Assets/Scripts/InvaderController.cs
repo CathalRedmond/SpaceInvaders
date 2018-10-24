@@ -32,13 +32,19 @@ public class InvaderController : MonoBehaviour {
     {
         while (!stop)
         {
+            float shootDelay = Random.Range(2.0f, 8.0f);
+            yield return new WaitForSeconds(shootDelay);
+
             if (containerScript.startShooting)
             {
                 Instantiate(m_shot, gameObject.transform.position, gameObject.transform.rotation);
             }
 
-            float shootDelay = Random.Range(2.0f, 8.0f);
-            yield return new WaitForSeconds(shootDelay);
         }
+    }
+
+    void OnEnable()
+    {
+        shootingRoutine = StartCoroutine(fireBolt());
     }
 }

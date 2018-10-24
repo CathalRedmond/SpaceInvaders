@@ -59,6 +59,8 @@ public class ContainerMover : MonoBehaviour {
         
         m_invaderCount = 10;
 
+        collided = false;
+
         for (int i = 0; i < 10; i++)
         {
             GameObject invader = transform.GetChild(i).gameObject;
