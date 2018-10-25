@@ -15,6 +15,8 @@ public class ShipMover : MonoBehaviour {
     Coroutine moveRoutine;
     bool stop;
 
+
+
     // Use this for initialization
     void Start () {
         stop = false;

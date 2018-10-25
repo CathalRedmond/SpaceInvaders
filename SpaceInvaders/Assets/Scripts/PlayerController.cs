@@ -37,6 +37,11 @@ public class PlayerController : MonoBehaviour
 
     private float m_nextFire;
 
+    private double invulnerabilityStartTime;
+
+    private int flashColourValue;
+
+
     void Start()
     {
         m_rigidbody = GetComponent<Rigidbody>();
@@ -45,7 +50,8 @@ public class PlayerController : MonoBehaviour
         score = 0;
         lives = 3;
         playPlayerKilledSound = true;
-        //shotSound = GetComponent<AudioClip>();
+        invulnerabilityStartTime = 0;
+        flashColourValue = 0;
     }
 
     void Update()
@@ -61,6 +67,31 @@ public class PlayerController : MonoBehaviour
         }
 
         updateText();
+        if (invulnerabilityStartTime != 0)
+        {
+            if (Time.realtimeSinceStartup - invulnerabilityStartTime > 3)
+            {
+                GetComponent<Collider>().enabled = true;
+                GetComponent<MeshRenderer>().enabled = true;
+
+                invulnerabilityStartTime = 0;
+                GetComponent<Renderer>().material.color = Color.green;
+                flashColourValue = 0;
+
+            }
+            else
+            {
+                if (flashColourValue % 2 == 0)
+                {
+                    GetComponent<MeshRenderer>().enabled = true;
+                }
+                else
+                {
+                    GetComponent<MeshRenderer>().enabled = false; 
+                }
+                flashColourValue++;
+            }
+        }
     }
     
     void FixedUpdate()
@@ -114,6 +145,14 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         m_rigidbody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
 
+
+
+        
+        
+        GetComponent<Collider>().enabled = false;
+
+
+        invulnerabilityStartTime = Time.realtimeSinceStartup;
 
         // become invulnerable here
     }
